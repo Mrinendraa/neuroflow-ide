@@ -1,0 +1,70 @@
+.bottom-toolbar {
+  position: absolute;
+  bottom: 15px; /* Floating above bottom */
+  left: 50%;
+  transform: translateX(-50%);
+  height: 50px; /* Fixed height for the bottom toolbar */
+  background-color: #ffffff; /* White background */
+  border: 1px solid #e0e0e0;
+  border-radius: 30px; /* Rounded corners */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000; /* Ensure it stays on top */
+  color: #333333;
+  min-width: 300px; /* Ensure it has a minimum width */
+}
+
+.toolbar-left-bottom, .toolbar-right-bottom {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.zoom-level {
+  font-size: 0.9em;
+  font-weight: bold;
+  min-width: 40px; /* Ensure space for 100% */
+  text-align: center;
+}
+
+/* Reusing icon-button styles from TopToolbar.css, but with smaller size for bottom */
+.bottom-toolbar .icon-button {
+  font-size: 1.2em;
+  padding: 6px;
+  color: #333333;
+  background: none;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  width: 32px;
+  height: 32px;
+}
+
+.bottom-toolbar .icon-button:hover {
+  background-color: #f8f9fa;
+  color: #6366f1;
+  transform: scale(1.1);
+}
+
+.bottom-toolbar .icon-button:active {
+  transform: scale(0.95);
+}
+
+.bottom-toolbar .icon-button.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.bottom-toolbar .icon-button.disabled:hover {
+  background-color: transparent;
+  color: #333333;
+  transform: none;
+}

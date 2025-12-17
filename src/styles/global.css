@@ -1,0 +1,64 @@
+:root {
+  /* Dark Mode (Default) */
+  --bg-primary: #1A1A1A;
+  --bg-secondary: #2D2D2D;
+  --bg-tertiary: #3D3D3D;
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.7);
+  --border-color: rgba(255, 255, 255, 0.1);
+  --accent-color: #667eea;
+  --shadow-color: rgba(0, 0, 0, 0.2);
+  
+  /* Node Colors - Dark Mode */
+  --node-regression-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --node-regression-border: #5a67d8;
+  --node-classification-bg: linear-gradient(135deg, #FF0080 0%, #7928CA 100%);
+  --node-classification-border: #FF0080;
+  --node-processing-bg: linear-gradient(135deg, #00b09b 0%, #96c93d 100%);
+  --node-processing-border: #00b09b;
+  --node-visualization-bg: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+  --node-visualization-border: #fda085;
+  --node-evaluator-bg: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  --node-evaluator-border: #f5576c;
+}
+
+.light-mode {
+  /* Light Mode */
+  --bg-primary: #f0f2f5;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #e4e6eb;
+  --text-primary: #1A1A1A;
+  --text-secondary: rgba(0, 0, 0, 0.6);
+  --border-color: rgba(0, 0, 0, 0.1);
+  --accent-color: #5a67d8;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+
+  /* Node Colors - Light Mode (Slightly lighter/brighter or same but with different contrast) */
+  --node-regression-bg: linear-gradient(135deg, #7f9cf5 0%, #9f7aea 100%);
+  --node-regression-border: #7f9cf5;
+  --node-classification-bg: linear-gradient(135deg, #F687B3 0%, #B794F4 100%);
+  --node-classification-border: #F687B3;
+  --node-processing-bg: linear-gradient(135deg, #68D391 0%, #F6E05E 100%);
+  --node-processing-border: #68D391;
+  --node-visualization-bg: linear-gradient(135deg, #FBD38D 0%, #F6AD55 100%);
+  --node-visualization-border: #FBD38D;
+  --node-evaluator-bg: linear-gradient(135deg, #F687B3 0%, #FC8181 100%);
+  --node-evaluator-border: #F687B3;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  overflow: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+* {
+  box-sizing: border-box;
+}

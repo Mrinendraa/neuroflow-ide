@@ -1,0 +1,200 @@
+.sidebar {
+  width: 100%;
+  background: var(--bg-secondary);
+  padding: 24px;
+  color: var(--text-primary);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto;
+  max-height: calc(100vh - 140px);
+  border-right: 1px solid var(--border-color);
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) var(--bg-primary);
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar for webkit browsers */
+.sidebar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+  border-radius: 4px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+.sidebar::-webkit-scrollbar-thumb:active {
+  background: var(--text-primary);
+}
+
+.sidebar-header {
+  font-size: 1.25rem;
+  font-weight: 700;
+  padding: 0 0 20px 0;
+  text-align: left;
+  color: var(--text-primary);
+  letter-spacing: -0.025em;
+  border-bottom: 2px solid var(--border-color);
+  margin-bottom: 24px;
+}
+
+.sidebar-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Category sections */
+.category-section {
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--bg-secondary);
+  margin-bottom: 0;
+  box-shadow: 0 1px 3px var(--shadow-color);
+  transition: all 0.2s ease;
+}
+
+.category-section:hover {
+  box-shadow: 0 4px 12px var(--shadow-color);
+  transform: translateY(-1px);
+}
+
+.category-header {
+  display: flex;
+  align-items: center;
+  padding: 16px 20px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px 16px 0 0;
+  background: var(--bg-tertiary);
+  /* make title readable */
+  border-bottom: 1px solid var(--border-color);
+}
+
+.category-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+  transition: left 0.6s ease;
+}
+
+.category-header:hover::before {
+  left: 100%;
+}
+
+.category-header:hover {
+  transform: translateY(-1px);
+  box-shadow: inset 0 -1px 0 var(--border-color);
+}
+
+.category-icon {
+  margin-right: 12px;
+  color: var(--accent-color);
+  /* readable icon color */
+  font-size: 1.1rem;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.03));
+}
+
+.category-name {
+  flex: 1;
+  font-weight: 700;
+  font-size: 0.98rem;
+  color: var(--text-primary);
+  /* dark, readable */
+  letter-spacing: -0.01em;
+}
+
+.expand-icon {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  /* muted, readable */
+  transition: all 0.2s ease;
+  font-weight: 700;
+}
+
+.expand-icon.expanded {
+  transform: rotate(180deg);
+  color: var(--text-primary);
+}
+
+.category-nodes {
+  padding: 16px;
+  background: var(--bg-secondary);
+  display: grid;
+  gap: 8px;
+}
+
+.node-palette-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  cursor: grab;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  color: var(--text-primary);
+  position: relative;
+  overflow: hidden;
+  font-weight: 500;
+  font-size: 0.9rem;
+  letter-spacing: -0.01em;
+}
+
+.node-palette-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.4s ease;
+}
+
+.node-palette-item:hover::before {
+  left: 100%;
+}
+
+.node-palette-item:hover {
+  background: var(--category-color, var(--accent-color));
+  border-color: var(--category-color, var(--accent-color));
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 25px var(--shadow-color);
+  color: #ffffff;
+}
+
+.node-palette-item:active {
+  transform: translateY(0) scale(0.98);
+  transition: all 0.1s ease;
+}
+
+.palette-icon {
+  margin-right: 12px;
+  color: var(--category-color, var(--accent-color));
+  font-size: 1.1rem;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.05));
+}
+
+.node-palette-item:hover .palette-icon {
+  transform: scale(1.1) rotate(5deg);
+  color: #ffffff;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}

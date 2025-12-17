@@ -1,0 +1,72 @@
+.custom-cursor {
+    width: 10px;
+    height: 10px;
+    background-color: var(--accent-color);
+    border-radius: 50%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    /* Center the cursor */
+    transition: width 0.2s, height 0.2s, background-color 0.2s;
+    mix-blend-mode: difference;
+    /* Cool effect over different backgrounds */
+}
+
+.cursor-trailer {
+    width: 30px;
+    height: 30px;
+    border: 2px solid var(--accent-color);
+    border-radius: 50%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 9998;
+    opacity: 0.6;
+    transition: width 0.2s, height 0.2s, border-color 0.2s, opacity 0.2s;
+    box-shadow: 0 0 10px var(--accent-color);
+}
+
+/* Expand effect on click */
+.custom-cursor.expand {
+    width: 8px;
+    height: 8px;
+}
+
+.cursor-trailer.expand {
+    width: 40px;
+    height: 40px;
+    background-color: rgba(100, 100, 255, 0.1);
+    border-color: transparent;
+}
+
+/* Hide default cursor everywhere */
+body {
+    cursor: none;
+}
+
+/* Ensure interactive elements still show pointer if needed, but we want our custom cursor to be the main one */
+a,
+button,
+input,
+select,
+textarea,
+.react-flow__node,
+.react-flow__handle {
+    cursor: none !important;
+    /* Force custom cursor */
+}
+
+/* Theme specific adjustments if needed */
+.custom-cursor.light {
+    mix-blend-mode: normal;
+    background-color: #000;
+}
+
+.cursor-trailer.light {
+    border-color: #000;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}

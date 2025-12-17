@@ -1,0 +1,294 @@
+/* Overall editor container */
+.editor-container-new {
+  display: flex;
+  flex-direction: column;
+  /* Stack children vertically */
+  height: 100vh;
+  width: 100vw;
+  background-color: var(--bg-primary);
+  /* Light background for the overall page */
+  position: relative;
+  /* For absolute positioning of toolbars */
+  color: var(--text-primary);
+}
+
+/* Main canvas area, taking up space between toolbars */
+.canvas-area {
+  flex-grow: 1;
+  /* Make it fill available vertical space */
+  position: relative;
+  /* For positioning instructions and custom elements */
+  background-color: var(--bg-primary);
+  /* White background for the main drawing area */
+  overflow: hidden;
+  /* Ensure nothing spills out */
+  display: flex;
+  /* Helps ReactFlowWrapper take full size */
+}
+
+/* React Flow wrapper, filling the canvas area */
+.reactflow-wrapper-new {
+  flex-grow: 1;
+  height: 100%;
+  width: 100%;
+  position: relative;
+  /* Needed for positioning elements within it */
+}
+
+/* Fixed dotted background that doesn't scale with zoom */
+.reactflow-wrapper-new {
+  background-image: radial-gradient(circle, var(--border-color) 1px, transparent 1px);
+  background-size: 24px 24px;
+  background-position: 0 0;
+  background-attachment: fixed;
+  background-color: var(--bg-primary);
+}
+
+/* Ensure the background stays fixed during zoom */
+.react-flow__pane {
+  background: transparent !important;
+}
+
+.react-flow__background {
+  background: transparent !important;
+}
+
+/* Example: Add Node button for testing */
+.add-node-button {
+  position: absolute;
+  bottom: 70px;
+  /* Above bottom toolbar */
+  left: 15px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--accent-color);
+  color: white;
+  font-size: 2em;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 5px var(--shadow-color);
+  z-index: 500;
+  transition: background-color 0.2s;
+}
+
+.add-node-button:hover {
+  filter: brightness(1.1);
+}
+
+/* Sidebar positioning */
+.sidebar {
+  position: absolute;
+  top: 80px;
+  /* Below the top toolbar */
+  left: 20px;
+  /* Floating from left edge */
+  height: calc(100vh - 140px);
+  /* Full height minus toolbars and margins */
+  width: 280px;
+  /* Fixed width */
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  /* Rounded corners */
+  box-shadow: 0 4px 12px var(--shadow-color);
+  z-index: 1000;
+  /* Above canvas, below toolbars */
+  overflow-y: auto;
+  /* Enable scrolling when content overflows */
+  animation: slideInLeft 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar.slide-out {
+  animation: slideOutLeft 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+
+  /* Overall editor container */
+  .editor-container-new {
+    display: flex;
+    flex-direction: column;
+    /* Stack children vertically */
+    height: 100vh;
+    width: 100vw;
+    background-color: var(--bg-primary);
+    /* Light background for the overall page */
+    position: relative;
+    /* For absolute positioning of toolbars */
+    color: var(--text-primary);
+  }
+
+  /* Main canvas area, taking up space between toolbars */
+  .canvas-area {
+    flex-grow: 1;
+    /* Make it fill available vertical space */
+    position: relative;
+    /* For positioning instructions and custom elements */
+    background-color: var(--bg-primary);
+    /* White background for the main drawing area */
+    overflow: hidden;
+    /* Ensure nothing spills out */
+    display: flex;
+    /* Helps ReactFlowWrapper take full size */
+  }
+
+  /* React Flow wrapper, filling the canvas area */
+  .reactflow-wrapper-new {
+    flex-grow: 1;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    /* Needed for positioning elements within it */
+  }
+
+  /* Fixed dotted background that doesn't scale with zoom */
+  .reactflow-wrapper-new {
+    background-image: radial-gradient(circle, var(--border-color) 1px, transparent 1px);
+    background-size: 24px 24px;
+    background-position: 0 0;
+    background-attachment: fixed;
+    background-color: var(--bg-primary);
+  }
+
+  /* Ensure the background stays fixed during zoom */
+  .react-flow__pane {
+    background: transparent !important;
+  }
+
+  .react-flow__background {
+    background: transparent !important;
+  }
+
+  /* Example: Add Node button for testing */
+  .add-node-button {
+    position: absolute;
+    bottom: 70px;
+    /* Above bottom toolbar */
+    left: 15px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--accent-color);
+    color: white;
+    font-size: 2em;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 5px var(--shadow-color);
+    z-index: 500;
+    transition: background-color 0.2s;
+  }
+
+  .add-node-button:hover {
+    filter: brightness(1.1);
+  }
+
+  /* Sidebar positioning */
+  .sidebar {
+    position: absolute;
+    top: 80px;
+    /* Below the top toolbar */
+    left: 20px;
+    /* Floating from left edge */
+    height: calc(100vh - 140px);
+    /* Full height minus toolbars and margins */
+    width: 280px;
+    /* Fixed width */
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    /* Rounded corners */
+    box-shadow: 0 4px 12px var(--shadow-color);
+    z-index: 1000;
+    /* Above canvas, below toolbars */
+    overflow-y: auto;
+    /* Enable scrolling when content overflows */
+    animation: slideInLeft 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .sidebar.slide-out {
+    animation: slideOutLeft 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+
+  @keyframes slideInLeft {
+    from {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideOutLeft {
+    from {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    to {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+  }
+
+  /* Hide default React Flow controls if you want to use custom ones */
+  .react-flow__controls {
+    display: none;
+  }
+
+  /* Global Handle Styles for better usability */
+  .react-flow__handle {
+    width: 24px !important;
+    /* Larger hit area */
+    height: 24px !important;
+    /* Larger hit area */
+    background: transparent !important;
+    /* Invisible container */
+    border: none !important;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    /* Ensure it's above other elements */
+  }
+
+  /* The visible part of the handle */
+  .react-flow__handle::after {
+    content: '';
+    width: 10px;
+    height: 10px;
+    background-color: #777;
+    border: 2px solid white;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    pointer-events: none;
+    /* Let clicks pass through to the handle */
+  }
+
+  /* Hover state for the handle */
+  .react-flow__handle:hover::after {
+    width: 14px;
+    height: 14px;
+    background-color: var(--accent-color, #6a1b9a);
+    box-shadow: 0 0 0 4px rgba(106, 27, 154, 0.2);
+  }
+
+  /* Connection active state */
+  .react-flow__handle-connecting::after {
+    background-color: var(--accent-color, #6a1b9a);
+    box-shadow: 0 0 0 2px rgba(106, 27, 154, 0.4);
+  }

@@ -1,0 +1,136 @@
+.top-toolbar {
+  position: absolute;
+  top: 15px;
+  left: 0;
+  right: 0;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  z-index: 1000;
+  pointer-events: none;
+  /* Allow clicks to pass through to canvas */
+}
+
+/* Move the center toolbar slightly to the right */
+.main-toolbar {
+  transform: translateX(70px);
+}
+
+
+/* Hamburger menu in separate circle */
+.hamburger-container {
+  pointer-events: auto;
+}
+
+.hamburger-button {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  font-size: 1.5em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+.hamburger-button:hover {
+  background-color: var(--bg-tertiary);
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px var(--shadow-color);
+}
+
+/* Main floating oval toolbar */
+.main-toolbar {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 30px;
+  padding: 8px 20px;
+  box-shadow: 0 4px 12px var(--shadow-color);
+  pointer-events: auto;
+}
+
+.toolbar-center {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.icon-button {
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-size: 1.3em;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  width: 40px;
+  height: 40px;
+}
+
+.icon-button:hover {
+  background-color: var(--bg-tertiary);
+  transform: scale(1.1);
+}
+
+.icon-button.selected {
+  background-color: var(--accent-color);
+  color: white;
+  transform: scale(1.1);
+}
+
+.icon-button.selected:hover {
+  filter: brightness(1.1);
+}
+
+/* Share and Library in separate oval */
+.actions-toolbar {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 30px;
+  padding: 8px 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  box-shadow: 0 4px 12px var(--shadow-color);
+  pointer-events: auto;
+}
+
+.action-button {
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-size: 1em;
+  padding: 8px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+  font-weight: 500;
+}
+
+.action-button:hover {
+  background-color: var(--bg-tertiary);
+  transform: scale(1.05);
+}
+
+.action-button span {
+  font-size: 0.9em;
+}
+
+/* Pan tool cursor */
+.pan-active .react-flow__pane {
+  cursor: grab !important;
+}

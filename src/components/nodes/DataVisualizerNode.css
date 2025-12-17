@@ -1,0 +1,137 @@
+.data-visualizer-node {
+  background: var(--node-visualization-bg);
+  border: 1px solid var(--node-visualization-border);
+  border-radius: 4px;
+  padding: 8px;
+  width: 540px;
+  min-height: 520px;
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+  color: white;
+}
+
+.dv-title {
+  font-weight: 600;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: white;
+}
+
+.dv-controls {
+  margin-bottom: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dv-chart-type,
+.dv-column-select {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dv-chart-type label,
+.dv-column-select label {
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.dv-chart-type select,
+.dv-column-select select {
+  padding: 4px 6px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+  font-size: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.dv-chart-type select option,
+.dv-column-select select option {
+  background: #1a202c;
+  color: white;
+}
+
+.dv-chart-type select:focus,
+.dv-column-select select:focus {
+  outline: none;
+  border-color: #ffd700;
+  box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.2);
+}
+
+.dv-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 380px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 4px;
+  padding: 8px;
+}
+
+.dv-placeholder {
+  font-size: 0.85em;
+  color: #666;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Chart SVG Styling - Keep the new improved styling */
+.chart-svg {
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Interactive elements - Keep the new improved styling */
+.scatter-point {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.scatter-point:hover {
+  r: 7;
+  opacity: 1 !important;
+  filter: drop-shadow(0 0 8px rgba(102, 126, 234, 0.8));
+}
+
+.bar-element {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.bar-element:hover {
+  opacity: 0.8;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3)) !important;
+}
+
+/* Custom handles for connection points */
+.custom-handle {
+  width: 8px !important;
+  height: 8px !important;
+  background-color: #666 !important;
+  border: 1px solid #fff !important;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+/* Show handles on node hover/selection */
+.data-visualizer-node:hover .custom-handle,
+.react-flow__node.selected .custom-handle {
+  opacity: 1;
+}

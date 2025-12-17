@@ -1,0 +1,862 @@
+.linear-regression-node {
+  background: linear-gradient(145deg, #f8f9ff 0%, #ffffff 100%);
+  border: 1px solid #e1e8f0;
+  border-radius: 12px;
+  color: #2d3748;
+  min-width: 280px;
+  max-width: 320px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Inter', sans-serif;
+  position: relative;
+  overflow: visible;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Prevent blurriness when zooming */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+.linear-regression-node:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.06);
+  border-color: #c3d4e8;
+}
+
+/* Subtle top accent */
+.linear-regression-node::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  opacity: 0.8;
+}
+
+/* ============================================
+   Header Section
+   ============================================ */
+
+.node-header {
+  display: flex;
+  align-items: center;
+  padding: 14px 16px;
+  border-bottom: 1px solid #e8eef5;
+  background: linear-gradient(180deg, #fafbfd 0%, #ffffff 100%);
+  gap: 10px;
+}
+
+.node-icon {
+  font-size: 1.2rem;
+  color: #667eea;
+  filter: drop-shadow(0 1px 2px rgba(102, 126, 234, 0.2));
+  flex-shrink: 0;
+}
+
+.node-title {
+  flex: 1;
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: -0.01em;
+  color: #1a202c;
+}
+
+.config-button {
+  background: #ffffff;
+  border: 1px solid #e1e8f0;
+  border-radius: 8px;
+  color: #667eea;
+  padding: 8px 10px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.config-button:hover {
+  background: #f7f9fc;
+  border-color: #667eea;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(102, 126, 234, 0.15);
+}
+
+.config-button:active {
+  transform: translateY(0);
+}
+
+.gear-icon {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+}
+
+.gear-icon.rotating {
+  transform: rotate(180deg);
+}
+
+/* ============================================
+   Main Content Area
+   ============================================ */
+
+.lr-selects {
+  padding: 16px;
+  background: #ffffff;
+}
+
+.lr-row {
+  margin-bottom: 14px;
+}
+
+.lr-row:last-of-type {
+  margin-bottom: 0;
+}
+
+.lr-row label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #4a5568;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+}
+
+.lr-row select,
+.lr-row input[type="number"] {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #e1e8f0;
+  border-radius: 8px;
+  background: #fafbfd;
+  color: #2d3748;
+  font-size: 0.9rem;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: inherit;
+}
+
+.lr-row select:hover,
+.lr-row input[type="number"]:hover {
+  border-color: #c3d4e8;
+  background: #f7f9fc;
+}
+
+.lr-row select:focus,
+.lr-row input[type="number"]:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  background: #ffffff;
+}
+
+.lr-row select option {
+  background: #ffffff;
+  color: #2d3748;
+  padding: 10px;
+}
+
+/* Train percentage controls */
+.lr-row button[type="button"] {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid #e1e8f0;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #4a5568;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  font-weight: 600;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lr-row button[type="button"]:hover:not(:disabled) {
+  background: #667eea;
+  color: #ffffff;
+  border-color: #667eea;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(102, 126, 234, 0.2);
+}
+
+.lr-row button[type="button"]:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.lr-row button[type="button"]:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ============================================
+   Actions & Buttons
+   ============================================ */
+
+.lr-actions {
+  margin-top: 16px;
+  display: flex;
+  gap: 8px;
+}
+
+.btn {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: inherit;
+  flex: 1;
+}
+
+.btn.primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #ffffff;
+  box-shadow: 0 2px 4px rgba(102, 126, 234, 0.2);
+}
+
+.btn.primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.btn.primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn.primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ============================================
+   Messages & Results
+   ============================================ */
+
+.lr-msg {
+  margin-top: 12px;
+  padding: 10px 12px;
+  background: #f0f4f8;
+  border-left: 3px solid #667eea;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: #4a5568;
+  line-height: 1.5;
+}
+
+.model-results {
+  margin-top: 12px;
+  padding: 14px;
+  background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+  border: 1px solid #e1e8f0;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  color: #2d3748;
+  line-height: 1.6;
+  overflow: visible !important;
+}
+
+.model-results>div {
+  margin-bottom: 6px;
+}
+
+.model-results>div:last-child {
+  margin-bottom: 0;
+}
+
+.model-results div[style*="fontWeight"] {
+  font-weight: 700;
+  color: #1a202c;
+  margin-top: 12px;
+  margin-bottom: 8px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #e1e8f0;
+}
+
+.model-results div[style*="fontWeight"]:first-child {
+  margin-top: 0;
+}
+
+/* API Warning */
+div[style*="#fff3cd"] {
+  background: #fffbeb !important;
+  border: 1px solid #fbbf24 !important;
+  padding: 8px 12px !important;
+  margin-top: 8px !important;
+  font-size: 0.8rem !important;
+  border-radius: 6px !important;
+  color: #92400e !important;
+}
+
+/* ============================================
+   Configuration Panel
+   ============================================ */
+
+.config-panel {
+  padding: 16px;
+  background: linear-gradient(180deg, #fafbfd 0%, #f7f9fc 100%);
+  border-top: 1px solid #e8eef5;
+  animation: slideDown 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.config-section {
+  margin-bottom: 14px;
+  position: relative;
+}
+
+.config-section:last-child {
+  margin-bottom: 0;
+}
+
+.config-section label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #4a5568;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+.config-section input,
+.config-section select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #e1e8f0;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #2d3748;
+  font-size: 0.9rem;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: inherit;
+}
+
+.config-section input::placeholder {
+  color: #a0aec0;
+  font-style: italic;
+}
+
+.config-section input:hover,
+.config-section select:hover {
+  border-color: #c3d4e8;
+  background: #fafbfd;
+}
+
+.config-section input:focus,
+.config-section select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  background: #ffffff;
+}
+
+.config-section select option {
+  background: #ffffff;
+  color: #2d3748;
+  padding: 10px;
+}
+
+/* ============================================
+   Multi Linear Regression - Checkbox Selection
+   ============================================ */
+
+.mlr-columns {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 200px;
+  overflow-y: auto;
+  padding: 8px;
+  background: #fafbfd;
+  border: 1px solid #e1e8f0;
+  border-radius: 8px;
+}
+
+.mlr-columns::-webkit-scrollbar {
+  width: 6px;
+}
+
+.mlr-columns::-webkit-scrollbar-track {
+  background: #f7f9fc;
+  border-radius: 3px;
+}
+
+.mlr-columns::-webkit-scrollbar-thumb {
+  background: #c3d4e8;
+  border-radius: 3px;
+}
+
+.mlr-columns::-webkit-scrollbar-thumb:hover {
+  background: #a0b5d0;
+}
+
+.mlr-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  background: #ffffff;
+  border: 1px solid #e1e8f0;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 0.9rem;
+  color: #2d3748;
+}
+
+.mlr-option:hover {
+  background: #f7f9fc;
+  border-color: #c3d4e8;
+  transform: translateX(2px);
+}
+
+.mlr-option input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: #667eea;
+  flex-shrink: 0;
+}
+
+.mlr-option input[type="checkbox"]:focus {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}
+
+.mlr-option span {
+  flex: 1;
+  user-select: none;
+}
+
+/* ============================================
+   Equation Hover Tooltip - Updated with proper sizing
+   ============================================ */
+
+.equation-container {
+  position: relative;
+  margin-top: 8px;
+  padding: 10px 12px;
+  background: #ffffff;
+  border: 1px solid #e1e8f0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.equation-container:hover {
+  background: linear-gradient(135deg, #667eea08 0%, #764ba208 100%);
+  border-color: #667eea;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.15);
+}
+
+.equation-display {
+  font-family: 'Courier New', Consolas, monospace;
+  font-size: 0.8rem;
+  color: #4a5568;
+  text-align: center;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+.equation-tooltip {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-12px) scale(0.9);
+  margin-bottom: 12px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  z-index: 10000;
+  /* Maximum dimensions as requested */
+  max-width: 10000px;
+  max-height: 10000px;
+  width: max-content;
+  height: max-content;
+}
+
+.equation-container:hover .equation-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0) scale(1);
+}
+
+.equation-tooltip-content {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #ffffff;
+  padding: 20px 32px;
+  border-radius: 14px;
+  box-shadow: 0 12px 32px rgba(102, 126, 234, 0.5),
+    0 6px 12px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+  font-family: 'Courier New', Consolas, monospace;
+  font-size: 1.3rem;
+  font-weight: 700;
+  white-space: normal;
+  word-break: break-word;
+  /* Maximum 10 lines with proper line height */
+  max-height: calc(1.6em * 10 + 40px);
+  /* 10 lines * line-height + padding */
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+  letter-spacing: 0.8px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  line-height: 1.6;
+  /* Responsive width constraints */
+  min-width: 200px;
+  max-width: min(800px, 90vw);
+  /* Cap at 800px or 90% of viewport */
+  width: max-content;
+}
+
+/* Scrollbar styling for the tooltip */
+.equation-tooltip-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.equation-tooltip-content::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.equation-tooltip-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+}
+
+.equation-tooltip-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.equation-tooltip-content::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 10px solid transparent;
+  border-top-color: #764ba2;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.2));
+}
+
+/* Ensure the tooltip stays within viewport bounds */
+.equation-tooltip {
+  /* Prevent tooltip from going off-screen */
+  left: 50%;
+  transform-origin: bottom center;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+  .equation-tooltip-content {
+    font-size: 1.1rem;
+    padding: 16px 24px;
+    max-width: min(600px, 85vw);
+  }
+
+  .equation-tooltip {
+    /* On mobile, ensure tooltip doesn't overflow viewport */
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%) translateY(-12px) scale(0.9);
+  }
+
+  .equation-container:hover .equation-tooltip {
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+
+/* For very long equations, ensure they wrap properly */
+.equation-tooltip-content .equation-line {
+  display: block;
+  text-align: center;
+  margin: 0.2em 0;
+}
+
+/* Support for complex mathematical notation */
+.equation-tooltip-content .math-sup {
+  vertical-align: super;
+  font-size: 0.8em;
+}
+
+.equation-tooltip-content .math-sub {
+  vertical-align: sub;
+  font-size: 0.8em;
+}
+
+.equation-tooltip-content .math-operator {
+  margin: 0 0.3em;
+}
+
+.equation-tooltip-content .math-coefficient {
+  font-weight: 600;
+}
+
+.equation-tooltip-content .math-variable {
+  font-style: italic;
+}
+
+/* ============================================
+   Responsive & Accessibility
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .linear-regression-node,
+  .config-button,
+  .btn,
+  .lr-row select,
+  .lr-row input,
+  .config-section input,
+
+  .equation-container {
+    position: relative;
+    margin-top: 8px;
+    padding: 10px 12px;
+    background: #ffffff;
+    border: 1px solid #e1e8f0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .equation-container:hover {
+    background: linear-gradient(135deg, #667eea08 0%, #764ba208 100%);
+    border-color: #667eea;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.15);
+  }
+
+  .equation-display {
+    font-family: 'Courier New', Consolas, monospace;
+    font-size: 0.8rem;
+    color: #4a5568;
+    text-align: center;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+  }
+
+  .equation-tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-12px) scale(0.9);
+    margin-bottom: 12px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    z-index: 10000;
+    /* Maximum dimensions as requested */
+    max-width: 10000px;
+    max-height: 10000px;
+    width: max-content;
+    height: max-content;
+  }
+
+  .equation-container:hover .equation-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+
+  .equation-tooltip-content {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #ffffff;
+    padding: 20px 32px;
+    border-radius: 14px;
+    box-shadow: 0 12px 32px rgba(102, 126, 234, 0.5),
+      0 6px 12px rgba(0, 0, 0, 0.3),
+      0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+    font-family: 'Courier New', Consolas, monospace;
+    font-size: 1.3rem;
+    font-weight: 700;
+    white-space: normal;
+    word-break: break-word;
+    /* Maximum 10 lines with proper line height */
+    max-height: calc(1.6em * 10 + 40px);
+    /* 10 lines * line-height + padding */
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+    letter-spacing: 0.8px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    line-height: 1.6;
+    /* Responsive width constraints */
+    min-width: 200px;
+    max-width: min(800px, 90vw);
+    /* Cap at 800px or 90% of viewport */
+    width: max-content;
+  }
+
+  /* Scrollbar styling for the tooltip */
+  .equation-tooltip-content::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .equation-tooltip-content::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+  }
+
+  .equation-tooltip-content::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+  }
+
+  .equation-tooltip-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+  }
+
+  .equation-tooltip-content::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 10px solid transparent;
+    border-top-color: #764ba2;
+    filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.2));
+  }
+
+  /* Ensure the tooltip stays within viewport bounds */
+  .equation-tooltip {
+    /* Prevent tooltip from going off-screen */
+    left: 50%;
+    transform-origin: bottom center;
+  }
+
+  /* Responsive adjustments for smaller screens */
+  @media (max-width: 768px) {
+    .equation-tooltip-content {
+      font-size: 1.1rem;
+      padding: 16px 24px;
+      max-width: min(600px, 85vw);
+    }
+
+    .equation-tooltip {
+      /* On mobile, ensure tooltip doesn't overflow viewport */
+      left: 50%;
+      right: auto;
+      transform: translateX(-50%) translateY(-12px) scale(0.9);
+    }
+
+    .equation-container:hover .equation-tooltip {
+      transform: translateX(-50%) translateY(0) scale(1);
+    }
+  }
+
+  /* For very long equations, ensure they wrap properly */
+  .equation-tooltip-content .equation-line {
+    display: block;
+    text-align: center;
+    margin: 0.2em 0;
+  }
+
+  /* Support for complex mathematical notation */
+  .equation-tooltip-content .math-sup {
+    vertical-align: super;
+    font-size: 0.8em;
+  }
+
+  .equation-tooltip-content .math-sub {
+    vertical-align: sub;
+    font-size: 0.8em;
+  }
+
+  .equation-tooltip-content .math-operator {
+    margin: 0 0.3em;
+  }
+
+  .equation-tooltip-content .math-coefficient {
+    font-weight: 600;
+  }
+
+  .equation-tooltip-content .math-variable {
+    font-style: italic;
+  }
+
+  /* ============================================
+   Responsive & Accessibility
+   ============================================ */
+
+  @media (prefers-reduced-motion: reduce) {
+
+    .linear-regression-node,
+    .config-button,
+    .btn,
+    .lr-row select,
+    .lr-row input,
+    .config-section input,
+    .config-section select {
+      transition: none;
+    }
+
+    .config-panel {
+      animation: none;
+    }
+
+    .gear-icon.rotating {
+      animation: none;
+    }
+  }
+
+  /* Focus visible for keyboard navigation */
+  .config-button:focus-visible,
+  .btn:focus-visible,
+  .lr-row select:focus-visible,
+  .lr-row input:focus-visible,
+  .config-section input:focus-visible,
+  .config-section select:focus-visible {
+    outline: 2px solid #667eea;
+    outline-offset: 2px;
+  }
+
+  /* ============================================
+   Custom Handle Styling
+   ============================================ */
+
+  .linear-regression-node .react-flow__handle {
+    background: white;
+    border: 2px solid #667eea;
+    width: 10px;
+    height: 10px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .linear-regression-node .react-flow__handle:hover {
+    background: #667eea;
+    transform: scale(1.2);
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.2);
+  }
+
+  .linear-regression-node .react-flow__handle-top {
+    top: -5px;
+  }
+
+  .linear-regression-node .react-flow__handle-bottom {
+    bottom: -5px;
+  }
