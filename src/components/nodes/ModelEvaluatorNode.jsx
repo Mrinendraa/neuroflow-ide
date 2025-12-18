@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { memo, useMemo, useState } from 'react';
 import { Handle, Position, useStore } from 'reactflow';
 import './ModelEvaluatorNode.css';
 
@@ -586,4 +586,4 @@ const ModelEvaluatorNode = ({ id, data, isConnectable }) => {
   );
 };
 
-export default ModelEvaluatorNode;
+export default memo(ModelEvaluatorNode);

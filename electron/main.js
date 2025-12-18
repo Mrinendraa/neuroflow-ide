@@ -1,5 +1,10 @@
 import { app, BrowserWindow, shell } from 'electron';
 import path from 'node:path';
+
+// Enable hardware acceleration flags
+app.commandLine.appendSwitch('enable-gpu-rasterization');
+app.commandLine.appendSwitch('enable-zero-copy');
+app.commandLine.appendSwitch('ignore-gpu-blocklist');
 import { fileURLToPath } from 'node:url';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -20,7 +25,9 @@ async function createWindow() {
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: false,
       contextIsolation: true,
+      backgroundThrottling: false, // Keep app active in background
     },
+    paintWhenInitiallyHidden: true,
     titleBarStyle: 'hiddenInset',
   });
 
@@ -47,7 +54,7 @@ async function createWindow() {
   }
 }
 
-app.disableHardwareAcceleration();
+// Keep GPU acceleration enabled for smoother canvas / React Flow rendering
 app.whenReady().then(() => {
   createWindow();
 

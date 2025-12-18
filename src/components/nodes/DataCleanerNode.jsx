@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { memo, useMemo, useState } from 'react';
 import { Handle, Position, useStore, useReactFlow } from 'reactflow';
 import './DataCleanerNode.css';
 import { parseFullTabularFile } from '../../utils/parseTabularFile';
@@ -429,4 +429,4 @@ const DataCleanerNode = ({ id, data, isConnectable }) => {
   );
 };
 
-export default DataCleanerNode;
+export default memo(DataCleanerNode);

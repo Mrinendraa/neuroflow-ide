@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { memo, useMemo, useState, useEffect } from 'react';
 import { Handle, Position, useStore, useReactFlow } from 'reactflow';
 import './LinearRegressionNode.css';
 import { FaChartLine, FaCog } from 'react-icons/fa';
@@ -420,4 +420,4 @@ const LinearRegressionNode = ({ id, data, isConnectable }) => {
   );
 };
 
-export default LinearRegressionNode;
+export default memo(LinearRegressionNode);

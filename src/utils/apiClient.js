@@ -1,5 +1,5 @@
 // API client for backend communication
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = 'http://localhost:3000/api';
 
 export async function trainLogisticRegression(X, y, trainPercent, featureNames = [], targetName = 'target') {
   try {

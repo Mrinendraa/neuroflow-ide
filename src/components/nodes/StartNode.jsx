@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Handle, Position } from 'reactflow';
 import './StartNode.css';
 
@@ -13,7 +13,7 @@ function StartNode({ data }) {
   );
 }
 
-export default StartNode;
+export default memo(StartNode);
 
 
 

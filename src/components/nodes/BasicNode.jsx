@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Handle, Position } from 'reactflow';
 import './BasicNode.css';
 
@@ -16,4 +16,4 @@ const BasicNode = ({ data, isConnectable }) => {
   );
 };
 
-export default BasicNode;
+export default memo(BasicNode);

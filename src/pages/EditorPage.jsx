@@ -36,49 +36,49 @@ import PCANode from '../components/nodes/PCANode';
 import FloatingEdge from '../components/edges/FloatingEdge';
 import './EditorPage.css';
 
-const nodeTypes = {
-  // Existing specialized nodes
-  start: StartNode,
-  csvReader: CsvReaderNode,
-  linearRegression: LinearRegressionNode,
-  multiLinearRegression: MultiLinearRegressionNode,
-  polynomialRegression: PolynomialRegressionNode,
-  knnRegression: KNNRegressionNode,
-  knnClassification: KNNClassificationNode,
-  dataCleaner: DataCleanerNode,
-  modelVisualizer: ModelVisualizerNode,
-  encoder: EncoderNode,
-  normalizer: NormalizerNode,
-  logisticRegression: LogisticRegressionNode,
-  dataVisualizer: DataVisualizerNode,
-  heatmap: HeatmapNode,
-  featureSelector: FeatureSelectorNode,
-  pca: PCANode,
-  // Generic/basic nodes for all other sidebar items
-  excelReader: BasicNode,
-  databaseReader: BasicNode,
-  heatmap: HeatmapNode,
-  ridgeRegression: BasicNode,
-  lassoRegression: BasicNode,
-  kMeans: BasicNode,
-  hierarchicalClustering: BasicNode,
-  dbscan: BasicNode,
-  mlp: BasicNode,
-  cnn: BasicNode,
-  rnn: BasicNode,
-  transformer: BasicNode,
-  evaluator: ModelEvaluatorNode,
-  visualizer: BasicNode,
-  exporter: BasicNode,
-};
-const edgeTypes = {
-  floating: FloatingEdge,
-};
-
 let id = 1;
-const getId = () => `node_${id++}`; // Corrected this line
+const getId = () => `node_${id++}`;
 
 const EditorPage = () => {
+  const nodeTypes = React.useMemo(() => ({
+    // Existing specialized nodes
+    start: StartNode,
+    csvReader: CsvReaderNode,
+    linearRegression: LinearRegressionNode,
+    multiLinearRegression: MultiLinearRegressionNode,
+    polynomialRegression: PolynomialRegressionNode,
+    knnRegression: KNNRegressionNode,
+    knnClassification: KNNClassificationNode,
+    dataCleaner: DataCleanerNode,
+    modelVisualizer: ModelVisualizerNode,
+    encoder: EncoderNode,
+    normalizer: NormalizerNode,
+    logisticRegression: LogisticRegressionNode,
+    dataVisualizer: DataVisualizerNode,
+    heatmap: HeatmapNode,
+    featureSelector: FeatureSelectorNode,
+    pca: PCANode,
+    // Generic/basic nodes for all other sidebar items
+    excelReader: BasicNode,
+    databaseReader: BasicNode,
+    ridgeRegression: BasicNode,
+    lassoRegression: BasicNode,
+    kMeans: BasicNode,
+    hierarchicalClustering: BasicNode,
+    dbscan: BasicNode,
+    mlp: BasicNode,
+    cnn: BasicNode,
+    rnn: BasicNode,
+    transformer: BasicNode,
+    evaluator: ModelEvaluatorNode,
+    visualizer: BasicNode,
+    exporter: BasicNode,
+  }), []);
+
+  const edgeTypes = React.useMemo(() => ({
+    floating: FloatingEdge,
+  }), []);
+
   const reactFlowWrapper = useRef(null);
   const [nodes, setNodes] = useState([
     {
@@ -403,6 +403,55 @@ const EditorPage = () => {
     setEdgeContextMenu(null);
   }, [nodes, saveToHistory]);
 
+  const handleNodesChange = useCallback(
+    (changes) => {
+      setNodes((nds) => {
+        // Filter out remove changes for start node
+        const filteredChanges = changes.filter((change) => {
+          if (change.type === 'remove') {
+            const node = nds.find((n) => n.id === change.id);
+            if (node && node.type === 'start') {
+              return false;
+            }
+          }
+          return true;
+        });
+
+        const newNodes = applyNodeChanges(filteredChanges, nds);
+        // Save to history after node changes
+        const isDragEnd = filteredChanges.some(
+          (change) => change.type === 'position' && change.dragging === false
+        );
+        const isRemove = filteredChanges.some((change) => change.type === 'remove');
+        const isAdd = filteredChanges.some((change) => change.type === 'add');
+
+        if (isDragEnd) {
+          // Debounce drag end to avoid too many saves
+          saveToHistory(newNodes, edges, true);
+        } else if (isRemove || isAdd) {
+          // Save immediately for add/remove operations
+          saveToHistory(newNodes, edges, false);
+        }
+        return newNodes;
+      });
+    },
+    [edges, saveToHistory]
+  );
+
+  const handleEdgesChange = useCallback(
+    (changes) => {
+      setEdges((eds) => {
+        const newEdges = applyEdgeChanges(changes, eds);
+        const isRemove = changes.some((change) => change.type === 'remove');
+        if (isRemove) {
+          setTimeout(() => saveToHistory(nodes, newEdges), 100);
+        }
+        return newEdges;
+      });
+    },
+    [nodes, saveToHistory]
+  );
+
   return (
     <div className={`editor-container-new ${activeTool === 'pan' ? 'pan-active' : ''}`}>
       <TopToolbar activeTool={activeTool} setActiveTool={setActiveTool} onMenuClick={handleMenuClick} />
@@ -413,45 +462,8 @@ const EditorPage = () => {
           <ReactFlow
             nodes={nodes}
             edges={edges}
-            onNodesChange={(changes) => {
-              setNodes((nds) => {
-                // Filter out remove changes for start node
-                const filteredChanges = changes.filter(change => {
-                  if (change.type === 'remove') {
-                    const node = nds.find(n => n.id === change.id);
-                    if (node && node.type === 'start') {
-                      return false;
-                    }
-                  }
-                  return true;
-                });
-
-                const newNodes = applyNodeChanges(filteredChanges, nds);
-                // Save to history after node changes
-                const isDragEnd = filteredChanges.some(change => change.type === 'position' && change.dragging === false);
-                const isRemove = filteredChanges.some(change => change.type === 'remove');
-                const isAdd = filteredChanges.some(change => change.type === 'add');
-
-                if (isDragEnd) {
-                  // Debounce drag end to avoid too many saves
-                  saveToHistory(newNodes, edges, true);
-                } else if (isRemove || isAdd) {
-                  // Save immediately for add/remove operations
-                  saveToHistory(newNodes, edges, false);
-                }
-                return newNodes;
-              });
-            }}
-            onEdgesChange={(changes) => {
-              setEdges((eds) => {
-                const newEdges = applyEdgeChanges(changes, eds);
-                const isRemove = changes.some(change => change.type === 'remove');
-                if (isRemove) {
-                  setTimeout(() => saveToHistory(nodes, newEdges), 100);
-                }
-                return newEdges;
-              });
-            }}
+            onNodesChange={handleNodesChange}
+            onEdgesChange={handleEdgesChange}
             onConnect={onConnect}
             onInit={setReactFlowInstance}
             onDrop={onDrop}
@@ -473,6 +485,9 @@ const EditorPage = () => {
             }}
             panOnDrag={activeTool === 'pan'}
             selectionOnDrag={activeTool === 'select'}
+            panOnScroll={false}
+            zoomOnScroll={false}
+            zoomOnDoubleClick={false}
           >
             <MiniMap
               style={{

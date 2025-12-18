@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { memo, useMemo, useRef, useState } from 'react';
 import { Handle, Position, useStore, useReactFlow } from 'reactflow';
 import './CsvReaderNode.css';
 import { parseTabularFile } from '../../utils/parseTabularFile';
@@ -135,4 +135,4 @@ function CsvReaderNode({ id, data }) {
   );
 }
 
-export default CsvReaderNode;
+export default memo(CsvReaderNode);
